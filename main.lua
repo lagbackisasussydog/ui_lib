@@ -139,7 +139,7 @@ local plr = game:GetService("Players").LocalPlayer
 
 local lib = {}
 
-function lib.Create()
+function lib.Get()
 	return Gui
 end
 
