@@ -108,7 +108,7 @@ function lib:Init(Size : Vector2,key_bind)
 		end
 	end
 
-	function win.CreateButton(button_name,id)
+	function win:CreateButton(button_name,id)
 		local newPanel = Instance.new("Frame",Panel)
 
 		newPanel.Name = button_name
@@ -144,7 +144,7 @@ function lib:Init(Size : Vector2,key_bind)
 		return newPanel
 	end
 
-	function win.CreateElement(element_type,panel,...)
+	function win:CreateElement(element_type,panel,...)
 		if element_type == "Button" then
 			local btn = Instance.new("TextButton",panel)
 			btn.Size = UDim2.new(0,375,0,35)
