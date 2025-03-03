@@ -1,7 +1,7 @@
-local plr = game:GetService("Players").LocalPlayer
-
 local lib = {}
 local win = {}
+
+local plr = game:GetService("Players").LocalPlayer
 
 function lib:Init(Size : Vector2,key_bind)
 	local Gui = Instance.new("ScreenGui")
