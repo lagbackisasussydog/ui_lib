@@ -3,7 +3,7 @@ local win = {}
 
 local plr = game:GetService("Players").LocalPlayer
 
-function lib:Init(Size : Vector2,key_bind)
+function lib:Init(Size,key_bind)
 	local Gui = Instance.new("ScreenGui")
 	local Main = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
@@ -18,13 +18,7 @@ function lib:Init(Size : Vector2,key_bind)
 	--Properties:
 
 	Gui.Name = "Gui"
-	
-	if game["Run Service"]:IsStudio() then
-		Gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-	else
-		Gui.Parent = game:GetService("CoreGui")
-	end
-	
+	Gui.Parent = game:GetService("CoreGui")
 	Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	Gui.ResetOnSpawn = false 
 
@@ -100,7 +94,7 @@ function lib:Init(Size : Vector2,key_bind)
 	end
 	coroutine.wrap(bind)()
 
-	function win.SetWindowIcon(ImageId)
+	function win:SetWindowIcon(ImageId)
 		Icon.Image = "rbxassetid://" .. ImageId
 		Icon.Transparency = 1
 		if Icon.Image == "" then
