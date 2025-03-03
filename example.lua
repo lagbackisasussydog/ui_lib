@@ -1,6 +1,6 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/ui_lib/refs/heads/main/main.lua"))
 
-local newGui = lib.Create() -- This is meant for getting the ui. sorry
+local newGui = lib.Get()
 
 local autofarm = lib.CreateButton("AutoFarm","AutoFarm","9695653110") -- Create button
 local travel = lib.CreateButton("Travel","Travel","6026568198")
