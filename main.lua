@@ -13,11 +13,18 @@ function lib.Init(Size : Vector2,key_bind)
 	local List = Instance.new("ScrollingFrame")
 	local UIListLayout = Instance.new("UIListLayout")
 	local Notification = Instance.new("ScreenGui")
-
-	--Properties:
+	local UIStroke = Instance.new("UIStroke")
 	
+	--Properties:
+
 	Gui.Name = "Gui"
-	Gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	
+	if game["Run Service"]:IsStudio() then
+		Gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	else
+		Gui.Parent = game:GetService("CoreGui")
+	end
+	
 	Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	Gui.ResetOnSpawn = false 
 
@@ -29,7 +36,13 @@ function lib.Init(Size : Vector2,key_bind)
 	Main.BorderSizePixel = 0
 	Main.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Main.Size = UDim2.new(0, Size.X, 0, Size.Y)
-
+	Main.Active = true
+	Main.Draggable = true
+	
+	UIStroke.Parent = Main
+	UIStroke.Color = Color3.fromRGB(255,255,255)
+	UIStroke.Thickness = 2
+	
 	UICorner.CornerRadius = UDim.new(0, 10)
 	UICorner.Parent = Main
 
@@ -62,7 +75,7 @@ function lib.Init(Size : Vector2,key_bind)
 	List.BackgroundTransparency = 1.000
 	List.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	List.BorderSizePixel = 0
-	List.Position = UDim2.new(0.0799999982, 0, 0.249230772, 0)
+	List.Position = UDim2.new(0.0240000002, 0, 0.249230772, 0)
 	List.Size = UDim2.new(0, 55, 0, 235)
 	List.ZIndex = 0
 	List.ScrollBarThickness = 0
@@ -73,13 +86,8 @@ function lib.Init(Size : Vector2,key_bind)
 
 	-- Scripts:
 
-	local function JVTMTLJ_fake_script() -- Main.Drag 
+	local function bind() -- Main.Drag 
 		local script = Instance.new('LocalScript', Main)
-
-		local frame = script.Parent
-		frame.Active = true
-		frame.Draggable = true
-
 		local p = false
 
 		game.UserInputService.InputBegan:Connect(function(i,p)
@@ -90,8 +98,8 @@ function lib.Init(Size : Vector2,key_bind)
 			end
 		end)
 	end
-	coroutine.wrap(JVTMTLJ_fake_script)()
-	
+	coroutine.wrap(bind)()
+
 	function win.SetWindowIcon(ImageId)
 		Icon.Image = "rbxassetid://" .. ImageId
 		Icon.Transparency = 1
@@ -99,7 +107,7 @@ function lib.Init(Size : Vector2,key_bind)
 			Icon.Transparency = .5
 		end
 	end
-	
+
 	function win.CreateButton(button_name,id)
 		local newPanel = Instance.new("Frame",Panel)
 
@@ -135,7 +143,7 @@ function lib.Init(Size : Vector2,key_bind)
 
 		return newPanel
 	end
-	
+
 	function win.CreateElement(element_type,panel,...)
 		if element_type == "Button" then
 			local btn = Instance.new("TextButton",panel)
