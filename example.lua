@@ -1,6 +1,6 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/ui_lib/refs/heads/main/main.lua"))()
 
-local win = lib:Init(Vector2.new(500,325),Enum.KeyCode.LeftAlt)
+local win = lib:Init(Enum.KeyCode.LeftAlt)
 
 win:SetWindowIcon("10800748303")
 local test = win:CreateButton("AutoFarm","16927814188")
