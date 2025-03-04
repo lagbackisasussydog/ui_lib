@@ -3,7 +3,7 @@ local win = {}
 
 local plr = game:GetService("Players").LocalPlayer
 
-function lib:Init(Size,key_bind)
+function lib:Init(key_bind)
 	local Gui = Instance.new("ScreenGui")
 	local Main = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
