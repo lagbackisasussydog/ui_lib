@@ -29,7 +29,7 @@ function lib:Init(Size,key_bind)
 	Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Main.BorderSizePixel = 0
 	Main.Position = UDim2.new(0.5, 0, 0.5, 0)
-	Main.Size = UDim2.new(0, Size.X, 0, Size.Y)
+	Main.Size = UDim2.new(0, 500, 0, 325)
 	Main.Active = true
 	Main.Draggable = true
 	
@@ -56,7 +56,7 @@ function lib:Init(Size,key_bind)
 	Bar.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Bar.BorderSizePixel = 0
 	Bar.Position = UDim2.new(0.151999995, 0, 0.036923077, 0)
-	Bar.Size = UDim2.new(0, 5, 0, Size.Y - 20)
+	Bar.Size = UDim2.new(0, 5, 0, 305)
 	Bar.ZIndex = -1
 
 	Panel.Name = "Panel"
