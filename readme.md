@@ -9,6 +9,7 @@ How to use:
 
 ## .1
 To create the gui, use lib:Init(Enum.KeyCode.YourKeyCode) and set it as a variable
+
 ex:
 
 `
