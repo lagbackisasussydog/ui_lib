@@ -20,25 +20,11 @@ local win = lib:Init(Enum.KeyCode.LeftAlt)
 Basic syntax: 
 
 ````lua
-win:CreateButton("Button name","Image id (do not include the url. just the id)")
-win:CreateElement("Button_type",your_panel,"...")
+win:CreateButton("Button name","Image id (do not include the url. just the id)") -- returns the panel
+win:CreateElement("Button_type",your_panel,"...") -- returns the button
 
 -- Button_type: Button,Toggle,Label
 ````
-
-## .3
-Set the element you've created to a variable and you have control of that element
-
-ex:
-
-```` lua
-local button = win:CreateElement("Button",your_panel,"Example button") -- replace "your_panel" with the panel you've created
-
-button.MouseButton1Up:Connect(function()
-  -- Your code here
-end)
-````
-
 ------------
 
 That's it
