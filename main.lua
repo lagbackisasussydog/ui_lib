@@ -103,7 +103,7 @@ function lib:Init(key_bind)
 	end
 
 	function win:CreateButton(button_name,id)
-		local newPanel = Instance.new("Frame",Panel)
+		local newPanel = Instance.new("ScrollingFrame",Panel)
 
 		newPanel.Name = button_name
 		newPanel.Parent = Panel
@@ -113,8 +113,9 @@ function lib:Init(key_bind)
 		newPanel.BorderSizePixel = 0
 		newPanel.Position = UDim2.new(0.180000007, 0, 0.036923077, 0)
 		newPanel.Size = UDim2.new(0, 401, 0, 305)
-		newPanel.Visible = false
-		Instance.new("UICorner",newPanel)
+		newPanel.ScrollBarThickness = 0
+		newPanel.CanvasSize = UDim2.new(0,0,500,0)
+		newPanel.Visible = true
 
 		local newButton = Instance.new("ImageButton",List)
 		newButton.Name = button_name
