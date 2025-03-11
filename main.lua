@@ -115,7 +115,7 @@ function lib:Init(key_bind)
 		newPanel.Size = UDim2.new(0, 401, 0, 305)
 		newPanel.ScrollBarThickness = 0
 		newPanel.CanvasSize = UDim2.new(0,0,500,0)
-		newPanel.Visible = true
+		newPanel.Visible = false
 
 		local newButton = Instance.new("ImageButton",List)
 		newButton.Name = button_name
