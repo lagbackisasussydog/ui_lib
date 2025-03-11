@@ -168,6 +168,47 @@ function lib:Init(key_bind)
 			lb.Size = UDim2.new(0,375,0,35)
 			lb.TextColor3 = Color3.fromRGB(255,255,255)
 			lb.Text = ...
+		elseif element_type == "TextBox" then
+			local Frame = Instance.new("Frame")
+			local Name = Instance.new("TextLabel")
+			local Box = Instance.new("TextBox")
+			
+			Frame.Name = "TextBox"
+			Frame.Parent = panel
+			Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+			Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Frame.BorderSizePixel = 0
+			Frame.Position = UDim2.new(-0.287499994, 0, 0, 0)
+			Frame.Size = UDim2.new(0, 365, 0, 55)
+
+			Name.Name = "Name"
+			Name.Parent = Frame
+			Name.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Name.BackgroundTransparency = 1.000
+			Name.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Name.BorderSizePixel = 0
+			Name.Position = UDim2.new(0.0383561626, 0, 0.163636357, 0)
+			Name.Size = UDim2.new(0, 132, 0, 35)
+			Name.Font = Enum.Font.SourceSans
+			Name.Text = ...
+			Name.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Name.TextSize = 20.000
+
+			Box.Name = "Box"
+			Box.Parent = Frame
+			Box.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+			Box.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Box.BorderSizePixel = 0
+			Box.Position = UDim2.new(0.424657524, 0, 0.272727281, 0)
+			Box.Size = UDim2.new(0, 200, 0, 24)
+			Box.Font = Enum.Font.SourceSans
+			Box.Text = ""
+			Box.TextColor3 = Color3.fromRGB(0, 0, 0)
+			Box.TextSize = 14.000
+			Box.ClearTextOnFocus = false
+			Box.TextColor3 = Color3.fromRGB(255,255,255)
+			
+			return Box
 		end
 	end
 
