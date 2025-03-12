@@ -30,6 +30,19 @@ function lib:Init(key_bind)
 	Main.BorderSizePixel = 0
 	Main.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Main.Size = UDim2.new(0, 500, 0, 325)
+
+	coroutine.wrap(function()
+		local h = false
+		local m = plr:GetMouse()
+
+		m.Button1Up:Connect(function() h = false end)
+		m.Button1Down:Connect(function() h = true end)
+		m.Move:Connect(function()
+			if h then
+				Main.Position = UDim2.new(0,m.X,0,m.Y)
+			end
+		end)			
+	end)
 	
 	UIStroke.Parent = Main
 	UIStroke.Color = Color3.fromRGB(255,255,255)
