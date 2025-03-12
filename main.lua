@@ -168,6 +168,13 @@ function lib:Init(key_bind)
 			lb.Size = UDim2.new(0,375,0,35)
 			lb.TextColor3 = Color3.fromRGB(255,255,255)
 			lb.Text = ...
+		elseif element_type == "HorizontalRule" then
+			local hr = Instance.new("TextLabel",panel)
+			hr.Size = UDim2.new(0,375,0,35)
+			hr.BackgroundTransparency = 1
+			hr.TextColor3 = Color3.fromRGB(255,255,255)
+			hr.TextScaled = true
+			hr.Text = "------------------------------------------------"
 		elseif element_type == "TextBox" then
 			local Frame = Instance.new("Frame")
 			local Name = Instance.new("TextLabel")
