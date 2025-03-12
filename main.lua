@@ -30,8 +30,6 @@ function lib:Init(key_bind)
 	Main.BorderSizePixel = 0
 	Main.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Main.Size = UDim2.new(0, 500, 0, 325)
-	Main.Active = true
-	Main.Draggable = true
 	
 	UIStroke.Parent = Main
 	UIStroke.Color = Color3.fromRGB(255,255,255)
@@ -214,6 +212,11 @@ function lib:Init(key_bind)
 			Box.TextSize = 14.000
 			Box.ClearTextOnFocus = false
 			Box.TextColor3 = Color3.fromRGB(255,255,255)
+
+			Box:GetPropertyChangedSignal("Text"):Connect(function()
+			    local newText = Box.Text:gsub("%D", "") -- Remove all non-numeric characters
+			    Box.Text = newText
+			end)
 			
 			return Box
 		end
