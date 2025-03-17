@@ -443,6 +443,7 @@ function Lib:Create(Exec_name : string,Key,preset)
 					end
 				end)
 			end)()
+			return Cur
 		end
 	end
 	return win
