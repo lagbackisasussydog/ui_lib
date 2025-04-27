@@ -272,7 +272,6 @@ function lib:Init(key_bind)
 
 			return Box
 		elseif element_type == "Slider" then
-			
 			local mouse = plr:GetMouse()
 			
 			local Slider = Instance.new("Frame")
