@@ -375,6 +375,8 @@ function lib:Init(key_bind)
 				TextLabel.Text = tostring(Val.Value)
 				Fill.Size = UDim2.fromScale(size,1)
 			end
+
+			UpdateSlider()
 			
 			local hovering = false
 			
@@ -402,6 +404,7 @@ function lib:Init(key_bind)
 			local Title = Instance.new("TextLabel")
 			local Desc = Instance.new("TextLabel")
 			local Frame = Instance.new("Frame")
+			local UIPadding = Instance.new("UIPadding")
 			
 			NotificationGui.Parent = game.CoreGui
 			
@@ -450,6 +453,9 @@ function lib:Init(key_bind)
 			Frame.BorderSizePixel = 0
 			Frame.Position = UDim2.new(0, 0, 0.5, 0)
 			Frame.Size = UDim2.new(0, 0, 0, 100)
+
+			UIPadding.Parent = NotificationGui
+			UIPadding.PaddingBottom = UDim.new(0,10)
 			
 			task.wait(conf.Duration)
 			
