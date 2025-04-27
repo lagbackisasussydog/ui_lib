@@ -1,7 +1,7 @@
+local plr = game:GetService("Players").LocalPlayer
+
 local lib = {}
 local win = {}
-
-local plr = game:GetService("Players").LocalPlayer
 
 function lib:Init(key_bind)
 	local Gui = Instance.new("ScreenGui")
@@ -18,7 +18,13 @@ function lib:Init(key_bind)
 	--Properties:
 
 	Gui.Name = "Gui"
-	Gui.Parent = game:GetService("CoreGui")
+	
+	if game["Run Service"]:IsStudio() then
+		Gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	else
+		Gui.Parent = game:GetService("CoreGui")
+	end
+	
 	Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	Gui.ResetOnSpawn = false 
 
@@ -29,20 +35,9 @@ function lib:Init(key_bind)
 	Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Main.BorderSizePixel = 0
 	Main.Position = UDim2.new(0.5, 0, 0.5, 0)
-	Main.Size = UDim2.new(0, 500, 0, 325)
-
-	coroutine.wrap(function()
-		local h = false
-		local m = plr:GetMouse()
-
-		m.Button1Up:Connect(function() h = false end)
-		m.Button1Down:Connect(function() h = true end)
-		m.Move:Connect(function()
-			if h then
-				Main.Position = UDim2.new(0,m.X,0,m.Y)
-			end
-		end)			
-	end)
+	Main.Size = UDim2.new(0, 500, 0, 350)
+	Main.Active = true
+	Main.Draggable = true
 	
 	UIStroke.Parent = Main
 	UIStroke.Color = Color3.fromRGB(255,255,255)
@@ -67,7 +62,7 @@ function lib:Init(key_bind)
 	Bar.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Bar.BorderSizePixel = 0
 	Bar.Position = UDim2.new(0.151999995, 0, 0.036923077, 0)
-	Bar.Size = UDim2.new(0, 5, 0, 305)
+	Bar.Size = UDim2.new(0, 5, 0, 330)
 	Bar.ZIndex = -1
 
 	Panel.Name = "Panel"
@@ -104,7 +99,7 @@ function lib:Init(key_bind)
 		end)
 	end
 	coroutine.wrap(bind)()
-
+	
 	function win:SetWindowIcon(ImageId)
 		Icon.Image = "rbxassetid://" .. ImageId
 		Icon.Transparency = 1
@@ -125,8 +120,10 @@ function lib:Init(key_bind)
 		newPanel.Position = UDim2.new(0.180000007, 0, 0.036923077, 0)
 		newPanel.Size = UDim2.new(0, 401, 0, 305)
 		newPanel.ScrollBarThickness = 0
-		newPanel.CanvasSize = UDim2.new(0,0,12000,0)
-		newPanel.Visible = false
+		newPanel.CanvasSize = UDim2.new(0,0,330,0)
+		newPanel.Visible = true
+		newPanel.Active = true
+		Instance.new("UICorner",newPanel)
 
 		local newButton = Instance.new("ImageButton",List)
 		newButton.Name = button_name
@@ -157,6 +154,7 @@ function lib:Init(key_bind)
 			btn.TextColor3 = Color3.fromRGB(255,255,255)
 			btn.BackgroundTransparency = .5
 			btn.Text = ...
+			btn.Active = true
 
 			return btn
 		elseif element_type == "Toggle" then
@@ -166,6 +164,7 @@ function lib:Init(key_bind)
 			btn.TextColor3 = Color3.fromRGB(255,255,255)
 			btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
 			btn.Text = ...
+			btn.Active = true
 
 			btn.MouseButton1Up:Connect(function()
 				isPressed = not isPressed
@@ -179,20 +178,58 @@ function lib:Init(key_bind)
 			lb.Size = UDim2.new(0,375,0,35)
 			lb.TextColor3 = Color3.fromRGB(255,255,255)
 			lb.Text = ...
-
-			return lb
-		elseif element_type == "HorizontalRule" then
-			local hr = Instance.new("TextLabel",panel)
-			hr.Size = UDim2.new(0,375,0,35)
-			hr.BackgroundTransparency = 1
-			hr.TextColor3 = Color3.fromRGB(255,255,255)
-			hr.TextScaled = true
-			hr.Text = "------------------------------------------------"
-		elseif element_type == "TextBox" then
+			lb.Active = true
+		elseif element_type == "NumberBox" then
 			local Frame = Instance.new("Frame")
 			local Name = Instance.new("TextLabel")
 			local Box = Instance.new("TextBox")
 			
+			Frame.Name = "TextBox"
+			Frame.Parent = panel
+			Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+			Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Frame.BorderSizePixel = 0
+			Frame.Position = UDim2.new(-0.287499994, 0, 0, 0)
+			Frame.Size = UDim2.new(0, 365, 0, 55)
+
+			Name.Name = "Name"
+			Name.Parent = Frame
+			Name.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Name.BackgroundTransparency = 1.000
+			Name.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Name.BorderSizePixel = 0
+			Name.Position = UDim2.new(0.0383561626, 0, 0.163636357, 0)
+			Name.Size = UDim2.new(0, 132, 0, 35)
+			Name.Font = Enum.Font.SourceSans
+			Name.Text = ...
+			Name.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Name.TextSize = 20.000
+
+			Box.Name = "Box"
+			Box.Parent = Frame
+			Box.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+			Box.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Box.BorderSizePixel = 0
+			Box.Position = UDim2.new(0.424657524, 0, 0.272727281, 0)
+			Box.Size = UDim2.new(0, 200, 0, 24)
+			Box.Font = Enum.Font.SourceSans
+			Box.Text = ""
+			Box.TextColor3 = Color3.fromRGB(0, 0, 0)
+			Box.TextSize = 14.000
+			Box.ClearTextOnFocus = false
+			Box.TextColor3 = Color3.fromRGB(255,255,255)
+			
+			Box:GetPropertyChangedSignal("Text"):Connect(function()
+				local newText = Box.Text:gsub("%D","")
+				Box.Text = newText
+			end)
+			
+			return Box
+		elseif element_type == "TextBox" then
+			local Frame = Instance.new("Frame")
+			local Name = Instance.new("TextLabel")
+			local Box = Instance.new("TextBox")
+
 			Frame.Name = "TextBox"
 			Frame.Parent = panel
 			Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -229,26 +266,41 @@ function lib:Init(key_bind)
 			Box.TextColor3 = Color3.fromRGB(255,255,255)
 
 			Box:GetPropertyChangedSignal("Text"):Connect(function()
-			    local newText = Box.Text:gsub("%D", "") -- Remove all non-numeric characters
-			    Box.Text = newText
+				local newText = Box.Text:gsub("%D","")
+				Box.Text = newText
 			end)
-			
+
 			return Box
-		elseif element_type == "LetterBox" then
-			local Frame = Instance.new("Frame")
-			local Name = Instance.new("TextLabel")
-			local Box = Instance.new("TextBox")
+		elseif element_type == "Slider" then
 			
-			Frame.Name = "TextBox"
-			Frame.Parent = panel
-			Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-			Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-			Frame.BorderSizePixel = 0
-			Frame.Position = UDim2.new(-0.287499994, 0, 0, 0)
-			Frame.Size = UDim2.new(0, 365, 0, 55)
+			local mouse = plr:GetMouse()
+			
+			local Slider = Instance.new("Frame")
+			local Name = Instance.new("TextLabel")
+			local Background = Instance.new("Frame")
+			local UICorner = Instance.new("UICorner")
+			local button = Instance.new("TextButton")
+			local UICorner_2 = Instance.new("UICorner")
+			local Fill = Instance.new("Frame")
+			local UICorner_3 = Instance.new("UICorner")
+			local button_2 = Instance.new("TextButton")
+			local UICorner_4 = Instance.new("UICorner")
+			local TextLabel = Instance.new("TextLabel")
+
+			--Properties:
+			
+			local conf = ...
+			
+			Slider.Name = "Slider"
+			Slider.Parent = panel
+			Slider.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+			Slider.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Slider.BorderSizePixel = 0
+			Slider.Position = UDim2.new(-0.287499994, 0, 0, 0)
+			Slider.Size = UDim2.new(0, 365, 0, 60)
 
 			Name.Name = "Name"
-			Name.Parent = Frame
+			Name.Parent = Slider
 			Name.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Name.BackgroundTransparency = 1.000
 			Name.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -256,25 +308,163 @@ function lib:Init(key_bind)
 			Name.Position = UDim2.new(0.0383561626, 0, 0.163636357, 0)
 			Name.Size = UDim2.new(0, 132, 0, 35)
 			Name.Font = Enum.Font.SourceSans
-			Name.Text = ...
+			Name.Text = conf.text
 			Name.TextColor3 = Color3.fromRGB(255, 255, 255)
 			Name.TextSize = 20.000
 
-			Box.Name = "Box"
-			Box.Parent = Frame
-			Box.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-			Box.BorderColor3 = Color3.fromRGB(0, 0, 0)
-			Box.BorderSizePixel = 0
-			Box.Position = UDim2.new(0.424657524, 0, 0.272727281, 0)
-			Box.Size = UDim2.new(0, 200, 0, 24)
-			Box.Font = Enum.Font.SourceSans
-			Box.Text = ""
-			Box.TextColor3 = Color3.fromRGB(0, 0, 0)
-			Box.TextSize = 14.000
-			Box.ClearTextOnFocus = false
-			Box.TextColor3 = Color3.fromRGB(255,255,255)
+			Background.Name = "Background"
+			Background.Parent = Slider
+			Background.AnchorPoint = Vector2.new(0.5, 0.5)
+			Background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+			Background.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Background.BorderSizePixel = 0
+			Background.Position = UDim2.new(0.698630154, 0, 0.4909091, 0)
+			Background.Size = UDim2.new(0, 200, 0, 24)
+
+			UICorner.Parent = Background
+
+			button.Name = "button"
+			button.Parent = Background
+			button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			button.BackgroundTransparency = 1.000
+			button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			button.BorderSizePixel = 0
+			button.Size = UDim2.new(0, 200, 0, 24)
+			button.Font = Enum.Font.SourceSans
+			button.Text = ""
+			button.TextColor3 = Color3.fromRGB(0, 0, 0)
+			button.TextSize = 14.000
+			button.ZIndex = 1
+
+			UICorner_2.Parent = button
+
+			Fill.Name = "Fill"
+			Fill.Parent = Background
+			Fill.AnchorPoint = Vector2.new(0, 0.5)
+			Fill.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Fill.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Fill.BorderSizePixel = 0
+			Fill.Position = UDim2.new(-0.00136993406, 0, 0.490908951, 0)
+			Fill.Size = UDim2.new(0, 200, 0, 24)
+
+			UICorner_3.Parent = Fill
 			
-			return Box
+			TextLabel.Parent = Background
+			TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			TextLabel.BackgroundTransparency = 1.000
+			TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			TextLabel.BorderSizePixel = 0
+			TextLabel.Position = UDim2.new(0.0500000007, 0, 0, 0)
+			TextLabel.Size = UDim2.new(0, 167, 0, 24)
+			TextLabel.Font = Enum.Font.SourceSans
+			TextLabel.Text = ""
+			TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+			TextLabel.TextSize = 20.000
+			TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+			
+			local start = conf.start or conf.start/100
+			local max = conf.max or conf.max/100
+			local Val = Instance.new("IntValue",Fill)
+			TextLabel.Text = tostring(Val.Value)
+
+			local function UpdateSlider()
+				local size = math.clamp((mouse.X-Background.AbsolutePosition.X)/Background.AbsoluteSize.X,0,1)
+				local ClampedValue = start + (size*(max-start))
+				
+				Val.Value = ClampedValue
+				TextLabel.Text = tostring(Val.Value)
+				Fill.Size = UDim2.fromScale(size,1)
+			end
+			
+			local hovering = false
+			
+			local function Activate()
+				hovering = true
+				while hovering do
+					UpdateSlider()
+					task.wait()
+				end
+			end
+			
+			button.MouseButton1Down:Connect(function()
+				Activate()
+			end)
+			
+			game:GetService("UserInputService").InputEnded:Connect(function(i,p)
+				if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
+					hovering = false
+				end
+			end)
+		elseif element_type == "Notification" then
+			local conf = ...
+			local NotificationGui = Instance.new("ScreenGui")
+			local Main = Instance.new("Frame")
+			local Title = Instance.new("TextLabel")
+			local Desc = Instance.new("TextLabel")
+			local Frame = Instance.new("Frame")
+			
+			NotificationGui.Parent = game.CoreGui
+			
+			Main.Name = "Main"
+			Main.Parent = NotificationGui
+			Main.AnchorPoint = Vector2.new(0.5, 0.5)
+			Main.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
+			Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Main.BorderSizePixel = 0
+			Main.Position = UDim2.new(0.802612484, 0, 0.878243506, 0)
+			Main.Size = UDim2.new(0, 248, 0, 100)
+
+			Title.Name = "Title"
+			Title.Parent = Main
+			Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Title.BackgroundTransparency = 1.000
+			Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Title.BorderSizePixel = 0
+			Title.Position = UDim2.new(0.661290348, 0, 0.0500000007, 0)
+			Title.Size = UDim2.new(0, 69, 0, 30)
+			Title.Font = Enum.Font.SourceSansBold
+			Title.Text = "Notification"
+			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Title.TextSize = 14.000
+			Title.TextXAlignment = Enum.TextXAlignment.Right
+
+			Desc.Name = "Desc"
+			Desc.Parent = Main
+			Desc.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
+			Desc.BackgroundTransparency = 1.000
+			Desc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Desc.BorderSizePixel = 0
+			Desc.Position = UDim2.new(0.0645161271, 0, 0.349999994, 0)
+			Desc.Size = UDim2.new(0, 217, 0, 55)
+			Desc.Font = Enum.Font.SourceSans
+			Desc.Text = conf.Text
+			Desc.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Desc.TextSize = 14.000
+			Desc.TextWrapped = true
+			Desc.TextXAlignment = Enum.TextXAlignment.Right
+
+			Frame.Parent = Main
+			Frame.AnchorPoint = Vector2.new(0, 0.5)
+			Frame.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+			Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Frame.BorderSizePixel = 0
+			Frame.Position = UDim2.new(0, 0, 0.5, 0)
+			Frame.Size = UDim2.new(0, 0, 0, 100)
+			
+			task.wait(conf.Duration)
+			
+			local tw = game:GetService("TweenService")
+			local t = tw:Create(Frame,TweenInfo.new(1,Enum.EasingStyle.Exponential),{Size = UDim2.new(1,0,1,0)})
+			t:Play()
+			t.Completed:Wait()
+			
+			for _,item in NotificationGui:GetDescendants() do
+				if item:IsA("TextLabel") then item.Text = "" end
+				local t = tw:Create(item,TweenInfo.new(1),{BackgroundTransparency = 1})
+				t:Play()
+			end
+			
+			game.Debris:AddItem(NotificationGui,10)
 		end
 	end
 
