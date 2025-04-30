@@ -88,7 +88,6 @@ function lib:Init(key_bind)
 
 	local function bind() -- Main.Drag 
 		local script = Instance.new('LocalScript', Main)
-		local p = false
 
 		game.UserInputService.InputBegan:Connect(function(i,p)
 			if p then return end
@@ -104,11 +103,27 @@ function lib:Init(key_bind)
 		Icon.Image = "rbxassetid://" .. ImageId
 		Icon.Transparency = 1
 		if Icon.Image == "" then
-			Icon.Transparency = .5
+			Icon.Image = "rbxassetid://12240689560"
 		end
 	end
 
-	function win:CreateButton(button_name,id)
+	function win:CreateBadge()
+		local BadgeGui = Instance.new("ScreenGui",game.CoreGui)
+		BadgeGui.ResetOnSpawn = false
+		BadgeGui.Name = "Badge"
+
+		local Button = Instance.new("TextButton",BadgeGui)
+		Button.Name = "ActivateButton"
+		Button.Size = UDim2.new(0,50,0,50)
+		Button.Active = true
+		Button.Draggable = true
+
+		Button.MouseButton1Up:Connect(function()
+			Gui.Enabled = not Gui.Enabled
+		end)
+	end
+	
+	function win:CreatePanel(button_name,id)
 		local newPanel = Instance.new("ScrollingFrame",Panel)
 
 		newPanel.Name = button_name
@@ -121,7 +136,7 @@ function lib:Init(key_bind)
 		newPanel.Size = UDim2.new(0, 401, 0, 305)
 		newPanel.ScrollBarThickness = 0
 		newPanel.CanvasSize = UDim2.new(0,0,330,0)
-		newPanel.Visible = true
+		newPanel.Visible = false
 		newPanel.Active = true
 		Instance.new("UICorner",newPanel)
 
@@ -366,36 +381,40 @@ function lib:Init(key_bind)
 			local Val = Instance.new("IntValue",Fill)
 			TextLabel.Text = tostring(Val.Value)
 
-			local function UpdateSlider()
-				local size = math.clamp((mouse.X-Background.AbsolutePosition.X)/Background.AbsoluteSize.X,0,1)
-				local ClampedValue = start + (size*(max-start))
+			coroutine.wrap(function()
+				local function UpdateSlider()
+					local size = math.clamp((mouse.X-Background.AbsolutePosition.X)/Background.AbsoluteSize.X,0,1)
+					local ClampedValue = start + (size*(max-start))
+					
+					Val.Value = ClampedValue
+					TextLabel.Text = tostring(Val.Value)
+					Fill.Size = UDim2.fromScale(size,1)
+				end
+	
+				UpdateSlider()
 				
-				Val.Value = ClampedValue
-				TextLabel.Text = tostring(Val.Value)
-				Fill.Size = UDim2.fromScale(size,1)
-			end
+				local hovering = false
+				
+				local function Activate()
+					hovering = true
+					while hovering do
+						UpdateSlider()
+						task.wait()
+					end
+				end
+				
+				button.MouseButton1Down:Connect(function()
+					Activate()
+				end)
+				
+				game:GetService("UserInputService").InputEnded:Connect(function(i,p)
+					if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
+						hovering = false
+					end
+				end)
+			end)()
 
-			UpdateSlider()
-			
-			local hovering = false
-			
-			local function Activate()
-				hovering = true
-				while hovering do
-					UpdateSlider()
-					task.wait()
-				end
-			end
-			
-			button.MouseButton1Down:Connect(function()
-				Activate()
-			end)
-			
-			game:GetService("UserInputService").InputEnded:Connect(function(i,p)
-				if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
-					hovering = false
-				end
-			end)
+			return Val.Value
 		elseif element_type == "Notification" then
 			local conf = ...
 			local NotificationGui = Instance.new("ScreenGui")
