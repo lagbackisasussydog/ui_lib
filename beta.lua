@@ -5,7 +5,6 @@ local Panel = {}
 local Player = game.Players.LocalPlayer
 
 function Lib:Create()
-	
 	local atts = {
 		["HideGui"] = {
 			["Enabled"] = false,
@@ -28,7 +27,7 @@ function Lib:Create()
 
 	Gui.Name = "Gui"
 	Gui.ResetOnSpawn = true
-	Gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") or game.CoreGui
+	Gui.Parent = game.CoreGui
 	Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	Main.Name = "Main"
