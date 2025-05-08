@@ -5,6 +5,14 @@ local Panel = {}
 local Player = game.Players.LocalPlayer
 
 function Lib:Create()
+	local tips = {
+		[1] = "You just need to play a little. Maybe you should go outside while i'm working for you. Also, If you can't find the button, scroll up",
+		[2] = "This UI is ugly!",
+		[3] = "Why don't you play something else?",
+		[4] = "Blox Fruits slicks",
+		[5] = "Buy premium!"
+	}
+	
 	local atts = {
 		["HideGui"] = {
 			["Enabled"] = false,
@@ -22,12 +30,11 @@ function Lib:Create()
 	local UIGradient = Instance.new("UIGradient")
 	local Brand = Instance.new("TextLabel")
 	local Buttons = Instance.new("ScrollingFrame")
-	local UIGridLayout = Instance.new("UIGridLayout")
 	local Panels = Instance.new("Folder",Main)
 
 	Gui.Name = "Gui"
 	Gui.ResetOnSpawn = true
-	Gui.Parent = game.CoreGui
+	Gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") or game.CoreGui
 	Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	Main.Name = "Main"
@@ -74,19 +81,111 @@ function Lib:Create()
 	Buttons.Name = "Buttons"
 	Buttons.Parent = Main
 	Buttons.Active = true
-	Buttons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Buttons.BackgroundTransparency = 1.000
+	Buttons.BackgroundColor3 = Color3.fromRGB(35,35,35)
+	Buttons.BackgroundTransparency = 0
 	Buttons.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Buttons.BorderSizePixel = 0
 	Buttons.Position = UDim2.new(0.0599999987, 0, 0, 0)
 	Buttons.Size = UDim2.new(0, 50, 0, 325)
 	Buttons.CanvasSize = UDim2.new(0, 0, 5, 0)
 	Buttons.ScrollBarThickness = 0
+	
+	local UIListLayout = Instance.new("UIListLayout")
+	
+	UIListLayout.Parent = Buttons
+	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	
+	local Close = Instance.new("Frame")
+	local UIGradient_Btn = Instance.new("UIGradient")
+	local ImageButton = Instance.new("ImageButton")
 
-	UIGridLayout.Parent = Buttons
-	UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	UIGridLayout.CellPadding = UDim2.new(0, 0, 0, 0)
-	UIGridLayout.CellSize = UDim2.new(0, 50, 0, 50)
+	Close.Name = "Close"
+	Close.Parent = Buttons
+	Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Close.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Close.BorderSizePixel = 0
+	Close.Size = UDim2.new(0, 50, 0, 50)
+
+	UIGradient_Btn.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(153, 0, 0))}
+	UIGradient_Btn.Parent = Close
+
+	ImageButton.Parent = Close
+	ImageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ImageButton.BackgroundTransparency = 1.000
+	ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	ImageButton.BorderSizePixel = 0
+	ImageButton.Size = UDim2.new(0, 50, 0, 50)
+	ImageButton.Image = "http://www.roblox.com/asset/?id=6031094678"
+
+	local function VEHMDZ_fake_script() -- ImageButton.LocalScript 
+		local script = Instance.new('LocalScript', ImageButton)
+
+		local btn = ImageButton
+
+		btn.MouseButton1Up:Connect(function()
+			Gui:Destroy()
+		end)
+	end
+	coroutine.wrap(VEHMDZ_fake_script)()
+	
+	local Tips = Instance.new("TextLabel")
+	local Display = Instance.new("TextLabel")
+	local Welcome = Instance.new("TextLabel")
+
+	Tips.Name = "Tips"
+	Tips.Parent = Main
+	Tips.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Tips.BackgroundTransparency = 1.000
+	Tips.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Tips.BorderSizePixel = 0
+	Tips.Position = UDim2.new(0.291641116, 0, 0.353846163, 0)
+	Tips.Size = UDim2.new(0, 270, 0, 85)
+	Tips.Font = Enum.Font.SourceSansBold
+	
+	Tips.Text = tips[math.random(1,5)]
+	
+	coroutine.wrap(function()
+		while task.wait(50) do
+			local rand = math.random(1,5)
+			game:GetService("TweenService"):Create(Tips,TweenInfo.new(1),{TextTransparency = 1}):Play()
+			task.wait(1)
+			Tips.Text = tips[rand]
+			game:GetService("TweenService"):Create(Tips,TweenInfo.new(1),{TextTransparency = 0}):Play()
+		end
+	end)()
+	
+	Tips.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Tips.TextSize = 14.000
+	Tips.TextWrapped = true
+
+	Display.Name = "Display"
+	Display.Parent = Main
+	Display.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Display.BackgroundTransparency = 1.000
+	Display.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Display.BorderSizePixel = 0
+	Display.Position = UDim2.new(0.291641116, 0, 0.683076918, 0)
+	Display.Size = UDim2.new(0, 270, 0, 45)
+	Display.Font = Enum.Font.SourceSansBold
+	Display.Text = "Currently playing: " .. game.Name 
+	Display.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Display.TextSize = 14.000
+	Display.TextWrapped = true
+
+	Welcome.Name = "Welcome"
+	Welcome.Parent = Main
+	Welcome.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Welcome.BackgroundTransparency = 1.000
+	Welcome.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Welcome.BorderSizePixel = 0
+	Welcome.Position = UDim2.new(0.360227525, 0, 0.15384616, 0)
+	Welcome.Size = UDim2.new(0, 200, 0, 50)
+	Welcome.Font = Enum.Font.SourceSansBold
+	Welcome.Text = "Welcome!"
+	Welcome.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Welcome.TextScaled = true
+	Welcome.TextSize = 14.000
+	Welcome.TextWrapped = true
 
 	local function VHXAQG_fake_script()
 		local script = Instance.new('LocalScript', UIGradient)
@@ -163,7 +262,7 @@ function Lib:Create()
 		Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Button.BorderSizePixel = 0
-		Button.Size = UDim2.new(0, 100, 0, 100)
+		Button.Size = UDim2.new(0, 50, 0, 50)
 
 		UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(54, 108, 162)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(85, 170, 255))}
 		UIGradient.Parent = Button
