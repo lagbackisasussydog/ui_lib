@@ -764,9 +764,15 @@ function Lib:Create()
 						task.wait(5)
 					end
 				end)()
-
+				
 				coroutine.wrap(PVKCI_fake_script)()
 				coroutine.wrap(Create)()
+
+				CurrentValue.Changed:Connect(function()
+					return CurrentValue.Value
+				end)
+
+				return CurrentValue.Value
 			end
 		end
 
