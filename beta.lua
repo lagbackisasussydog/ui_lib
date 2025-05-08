@@ -12,7 +12,7 @@ function Lib:Create()
 		[4] = "Blox Fruits slicks",
 		[5] = "Buy premium!"
 	}
-	
+
 	local atts = {
 		["HideGui"] = {
 			["Enabled"] = false,
@@ -23,7 +23,7 @@ function Lib:Create()
 			["BaseColor"] = Color3.fromRGB(85, 170, 255)
 		}
 	}
-	
+
 	local Gui = Instance.new("ScreenGui")
 	local Main = Instance.new("Frame")
 	local Bar = Instance.new("Frame")
@@ -89,12 +89,12 @@ function Lib:Create()
 	Buttons.Size = UDim2.new(0, 50, 0, 325)
 	Buttons.CanvasSize = UDim2.new(0, 0, 5, 0)
 	Buttons.ScrollBarThickness = 0
-	
+
 	local UIListLayout = Instance.new("UIListLayout")
-	
+
 	UIListLayout.Parent = Buttons
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	
+
 	local Close = Instance.new("Frame")
 	local UIGradient_Btn = Instance.new("UIGradient")
 	local ImageButton = Instance.new("ImageButton")
@@ -127,7 +127,7 @@ function Lib:Create()
 		end)
 	end
 	coroutine.wrap(VEHMDZ_fake_script)()
-	
+
 	local Tips = Instance.new("TextLabel")
 	local Display = Instance.new("TextLabel")
 	local Welcome = Instance.new("TextLabel")
@@ -141,9 +141,9 @@ function Lib:Create()
 	Tips.Position = UDim2.new(0.291641116, 0, 0.353846163, 0)
 	Tips.Size = UDim2.new(0, 270, 0, 85)
 	Tips.Font = Enum.Font.SourceSansBold
-	
+
 	Tips.Text = tips[math.random(1,5)]
-	
+
 	coroutine.wrap(function()
 		while task.wait(50) do
 			local rand = math.random(1,5)
@@ -153,7 +153,7 @@ function Lib:Create()
 			game:GetService("TweenService"):Create(Tips,TweenInfo.new(1),{TextTransparency = 0}):Play()
 		end
 	end)()
-	
+
 	Tips.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Tips.TextSize = 14.000
 	Tips.TextWrapped = true
@@ -218,17 +218,17 @@ function Lib:Create()
 		frame.Draggable = true
 	end
 	coroutine.wrap(ZNUBQRD_fake_script)()
-	
+
 	coroutine.wrap(function()
 		game.UserInputService.InputBegan:Connect(function(i,p)
 			if p then return end
-			
+
 			if atts.HideGui.Enabled and i.KeyCode == atts.HideGui.KeyCode then
 				Gui.Enabled = not Gui.Enabled
 			end
 		end)	
 	end)()
-	
+
 	function Win:ChangeAttribute(att,...)
 		if att == "HideGui" then
 			local conf = ...
@@ -238,7 +238,7 @@ function Lib:Create()
 			local conf = ...
 			atts.Color.BaseColor = conf[1]
 			atts.Color.Background = conf[2]
-			
+
 			for _,item in pairs(Gui:GetDescendants()) do
 				if item:IsA("UIGradient") then
 					item.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, conf[2]), ColorSequenceKeypoint.new(1.00, conf[1])}
@@ -246,17 +246,17 @@ function Lib:Create()
 			end
 		end
 	end
-	
+
 	function Win:Destroy()
 		Gui.Parent = nil
 		script.Parent = nil
 	end
-	
+
 	function Win:AddPanel(PanelName,ImageId)
 		local Button = Instance.new("Frame")
 		local UIGradient = Instance.new("UIGradient")
 		local ImageButton = Instance.new("ImageButton")
-		
+
 		Button.Name = "Button"
 		Button.Parent = Buttons
 		Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -274,7 +274,7 @@ function Lib:Create()
 		ImageButton.BorderSizePixel = 0
 		ImageButton.Size = UDim2.new(0, 50, 0, 50)
 		ImageButton.Image = "rbxassetid://" .. ImageId
-		
+
 		local PanelFrame = Instance.new("Frame")
 		local Bar = Instance.new("Frame")
 		local UIGradient = Instance.new("UIGradient")
@@ -391,13 +391,13 @@ function Lib:Create()
 			end)
 		end
 		coroutine.wrap(TUMJOH_fake_script)()
-		
+
 		coroutine.wrap(function()
 			ImageButton.MouseButton1Up:Connect(function()
 				PanelFrame.Visible = true
 			end)
 		end)()
-		
+
 		function Panel:CreateElement(element,...)
 			if element == 1 then 
 				local Button = Instance.new("Frame")
@@ -641,18 +641,144 @@ function Lib:Create()
 						end
 					end)
 				end)()
+			elseif element == 5 then
+				local conf = ...
+
+				local Dropdown = Instance.new("Frame")
+				local Prompt = Instance.new("TextLabel")
+				local Button = Instance.new("TextButton")
+				local List = Instance.new("ScrollingFrame")
+				local UIGridLayout = Instance.new("UIGridLayout")
+				local CurrentValue = Instance.new("StringValue",Dropdown)
+
+				Dropdown.Name = "Dropdown"
+				Dropdown.Parent = Frame
+				Dropdown.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
+				Dropdown.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Dropdown.BorderSizePixel = 0
+				Dropdown.Size = UDim2.new(0, 470, 0, 50)
+
+				Prompt.Name = "Prompt"
+				Prompt.Parent = Dropdown
+				Prompt.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Prompt.BackgroundTransparency = 1.000
+				Prompt.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Prompt.BorderSizePixel = 0
+				Prompt.Position = UDim2.new(0.0377777778, 0, 0, 0)
+				Prompt.Size = UDim2.new(0, 203, 0, 50)
+				Prompt.Font = Enum.Font.SourceSans
+				Prompt.Text = conf.Text
+				Prompt.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Prompt.TextSize = 20.000
+				Prompt.TextXAlignment = Enum.TextXAlignment.Left
+
+				Button.Name = "Button"
+				Button.Parent = Dropdown
+				Button.AnchorPoint = Vector2.new(0.5, 0.5)
+				Button.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+				Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Button.BorderSizePixel = 0
+				Button.Position = UDim2.new(0.756383002, 0, 0.5, 0)
+				Button.Size = UDim2.new(0, 165, 0, 30)
+				Button.Font = Enum.Font.SourceSans
+				Button.Text = conf.Default
+				Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Button.TextSize = 18.000
+
+				List.Name = "List"
+				List.Parent = Dropdown
+				List.Active = true
+				List.AnchorPoint = Vector2.new(0.5, 0.5)
+				List.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+				List.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				List.BorderSizePixel = 0
+				List.Position = UDim2.new(0.756383002, 0, 1.79999995, 0)
+				List.Size = UDim2.new(0, 165, 0, 100)
+				List.Visible = false
+				List.AutomaticCanvasSize = Enum.AutomaticSize.Y
+				List.ScrollBarThickness = 0
+
+				UIGridLayout.Parent = List
+				UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+				UIGridLayout.CellPadding = UDim2.new(0, 0, 0, 0)
+				UIGridLayout.CellSize = UDim2.new(0, 165, 0, 30)
+
+				CurrentValue.Value = conf.Default
+				
+				local Pressed = false
+				
+				local function PVKCI_fake_script() -- Button.Handler 
+					local script = Instance.new('LocalScript', Button)
+
+					local BaseFrame = script.Parent.Parent.Parent
+					local Dropdown = BaseFrame.Dropdown
+					local Button = Dropdown.Button
+					local List = Dropdown.List
+
+					Button.MouseButton1Up:Connect(function()
+						Pressed = not Pressed
+
+						if Pressed then
+							List.Visible = true
+							BaseFrame.ScrollingEnabled = false
+						else
+							List.Visible = false
+							BaseFrame.ScrollingEnabled = true
+						end
+					end)
+				end
+
+				local function Create()
+					for _,item in pairs(conf.List) do
+						local Test1 = Instance.new("TextButton")
+
+						Test1.Name = item
+						Test1.Parent = List
+						Test1.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+						Test1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+						Test1.BorderSizePixel = 0
+						Test1.Position = UDim2.new(0, 0, -0.0500000007, 0)
+						Test1.Size = UDim2.new(0, 200, 0, 50)
+						Test1.Font = Enum.Font.SourceSans
+						Test1.Text = item
+						Test1.TextColor3 = Color3.fromRGB(255, 255, 255)
+						Test1.TextSize = 14.000
+					end
+				end
+
+				coroutine.wrap(function()
+					while true do
+						for _,btn in pairs(List:GetChildren()) do
+							if btn:IsA("TextButton") then
+								btn.MouseButton1Up:Connect(function()
+									local Text = btn.Text
+
+									List.Visible = false
+									Frame.ScrollingEnabled = true
+									Pressed = false
+									Button.Text = Text
+									CurrentValue.Value = Text
+								end)
+							end
+						end
+						task.wait(5)
+					end
+				end)()
+
+				coroutine.wrap(PVKCI_fake_script)()
+				coroutine.wrap(Create)()
 			end
 		end
-		
+
 		function Panel:Button1Up(button,func)
 			coroutine.wrap(function()
 				button.MouseButton1Up:Connect(func)
 			end)()
 		end
-		
+
 		return Panel
 	end
-	
+
 	return Win
 end
 
