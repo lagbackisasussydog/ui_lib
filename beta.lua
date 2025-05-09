@@ -5,6 +5,7 @@ local Panel = {}
 local Player = game.Players.LocalPlayer
 
 function Lib:Create()
+
 	local tips = {
 		[1] = "You just need to play a little. Maybe you should go outside while i'm working for you. Also, If you can't find the button, scroll up",
 		[2] = "This UI is ugly!",
@@ -34,7 +35,13 @@ function Lib:Create()
 
 	Gui.Name = "Gui"
 	Gui.ResetOnSpawn = true
-	Gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") or game.CoreGui
+	
+	if game["Run Service"]:IsStudio() then
+		Gui.Parent = Player.PlayerGui
+	else
+		Gui.Parent = game.CoreGui
+	end
+	
 	Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	Main.Name = "Main"
@@ -764,15 +771,11 @@ function Lib:Create()
 						task.wait(5)
 					end
 				end)()
-				
+
 				coroutine.wrap(PVKCI_fake_script)()
 				coroutine.wrap(Create)()
-
-				CurrentValue.Changed:Connect(function()
-					return CurrentValue.Value
-				end)
-
-				return CurrentValue.Value
+				
+				return CurrentValue
 			end
 		end
 
