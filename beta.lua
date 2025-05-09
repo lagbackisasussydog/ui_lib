@@ -288,7 +288,7 @@ function Lib:Create()
 		local Text = Instance.new("TextLabel")
 		local Close = Instance.new("ImageButton")
 
-		PanelFrame.Name = "PanelFrame"
+		PanelFrame.Name = PanelName
 		PanelFrame.Parent = Panels
 		PanelFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 		PanelFrame.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
@@ -405,7 +405,11 @@ function Lib:Create()
 			end)
 		end)()
 
-		function Panel:CreateElement(element,...)
+		function Panel:GetFrame(PanelName)
+			return Panels:FindFirstChild(PanelName):FindFirstChild("Frame")
+		end
+
+		function Panel:CreateElement(element,Frame,...)
 			if element == 1 then 
 				local Button = Instance.new("Frame")
 				local Prompt = Instance.new("TextLabel")
